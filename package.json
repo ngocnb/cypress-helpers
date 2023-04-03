@@ -1,0 +1,26 @@
+{
+  "name": "@baongoc/cypress-helpers",
+  "version": "1.0.0",
+  "description": "Helpers for quickly developing test scripts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/ngocnb/cypress-helpers.git"
+  },
+  "keywords": [
+    "cypress",
+    "helper"
+  ],
+  "author": "Nguyen Bao Ngoc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/ngocnb/cypress-helpers/issues"
+  },
+  "homepage": "https://gitlab.com/ngocnb/cypress-helpers#readme",
+  "dependencies": {
+    "prettier": "^2.8.7"
+  }
+}
