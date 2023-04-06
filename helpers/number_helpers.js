@@ -1,10 +1,8 @@
 module.exports.generateRandomInt = (max, min = 0) => {
-    let result = Math.floor(Math.random() * Math.floor(max));
-    if (result < min) {
-        result = result + min;
-    }
-    return result;
-}
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min);
+};
 
 module.exports.padWithZeros = (number, length) => {
     var my_string = "" + number;
@@ -13,4 +11,4 @@ module.exports.padWithZeros = (number, length) => {
     }
 
     return my_string;
-}
+};

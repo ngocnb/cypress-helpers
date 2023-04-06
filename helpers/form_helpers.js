@@ -17,10 +17,10 @@ module.exports.fillTextField = (selector, label, value) => {
     }
 };
 
-module.exports.fillTextareaField = (name, label, value) => {
+module.exports.fillTextareaField = (selector, label, value) => {
     if (value !== "" && value !== undefined) {
         cy.addStep(`-- Type '${value}' to ${label} field`)
-            .get(`textarea[name=${name}]`)
+            .get(selector)
             .clear()
             .type(value)
             .then(() => {
@@ -28,7 +28,7 @@ module.exports.fillTextareaField = (name, label, value) => {
             });
     } else {
         cy.addStep(`-- Clear ${label} field`)
-            .get(`textarea[name=${name}]`)
+            .get(selector)
             .clear()
             .then(() => {
                 cy.markStepSuccess();
@@ -36,10 +36,10 @@ module.exports.fillTextareaField = (name, label, value) => {
     }
 };
 
-module.exports.selectField = (name, label, value) => {
+module.exports.selectField = (selector, label, value) => {
     if (value !== undefined) {
         cy.addStep(`-- Choose '${value}' in ${label} field`)
-            .get(`select[name=${name}]`)
+            .get(selector)
             .select(value)
             .then(() => {
                 cy.markStepSuccess();
@@ -112,6 +112,40 @@ module.exports.clickButton = (selector, label) => {
     cy.addStep(`Click ${label} button`)
         .get(selector)
         .click()
+        .then(() => {
+            cy.markStepSuccess();
+        });
+};
+
+module.exports.attachFileField = (selector, label, files) => {
+    if (files === undefined) return true;
+
+    if (Array.isArray(files)) {
+        for (let i = 0; i < files.length; i++) {
+            cy.addStep(`Attach file to ${label} field`)
+                .get(selector)
+                .attachFile(files[i])
+                .then(() => {
+                    cy.markStepSuccess();
+                });
+        }
+    } else {
+        cy.addStep(`Attach file to ${label} field`)
+            .get(selector)
+            .attachFile(files)
+            .then(() => {
+                cy.markStepSuccess();
+            });
+    }
+};
+
+module.exports.checkboxField = (selector, label, values) => {
+    if (values === undefined || values.length == 0) return true;
+    console.log(selector, label, values);
+
+    cy.addStep(`Select options of checkbox ${label}`)
+        .get(selector)
+        .check(values)
         .then(() => {
             cy.markStepSuccess();
         });
