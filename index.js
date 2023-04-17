@@ -5,5 +5,6 @@ module.exports = {
     numberHelpers: require("./helpers/number_helpers"),
     assertHelpers: require("./helpers/assert_helpers"),
     eccube4Helpers: require("./helpers/eccube4_helpers"),
+    dcatHelpers: require("./helpers/dcat_helpers"),
     fileHelpers: require("./helpers/file_helpers"),
 };
