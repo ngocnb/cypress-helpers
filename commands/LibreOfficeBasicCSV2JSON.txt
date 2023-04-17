@@ -1,0 +1,109 @@
+'OpenOffice Basic macro for exporting a .ods spreadsheet to JSON (and CSV)
+'Project-specific formating I implemented: cull empty or "0" entries, '^' as separator value for the csv
+
+REM  *****  BASIC  *****
+
+Sub Main
+
+'First export to CSV which we will later use as the source for the export to json
+Dim Propval(1) as New com.sun.star.beans.PropertyValue
+Propval(0).Name = "FilterName"
+Propval(0).Value = "Text - txt - csv (StarCalc)"
+Propval(1).Name = "FilterOptions"
+Propval(1).Value ="94,34,76,1,1"
+Doc = ThisComponent
+Dim FileName as String
+FileName = Doc.getURL()
+splitName = split(FileName, ".")
+FileName = splitName(0) + ".csv"
+Doc.StoreToURL(FileName, Propval())
+
+'Export to JSON
+
+'Get the number of keys in the header of the csv
+Dim csv As Integer
+Dim len As Integer
+csv = FreeFile
+Open FileName For Input As csv
+Line Input #csv, first
+keys = split(first, "^")
+len = 0
+For Each i in keys
+	len = len + 1
+Next i
+
+'Need to count the number of lines in the csv (after header line)
+Dim lines as Integer
+lines = 0
+Do While not eof(csv)
+	Line Input #csv, line   
+	If line <>"" Then
+		lines = lines + 1
+	End If
+Loop
+Close #csv
+
+'Need to re-open the csv again for a fresh read from just after the header
+Open FileName For Input As csv
+Line Input #csv, line
+
+'Open the JSON file for writing
+Dim json As Integer
+Dim CurrentLine As String
+Dim fn As String
+fn = splitName(0) + ".json" 
+json = Freefile
+
+Open fn For Output As json
+Print #json, "["
+
+For line = 0 to lines-1
+	Line Input #csv, CurrentLine   
+	If CurrentLine <>"" Then
+    	values = split(CurrentLine, "^")
+    	
+    	'Find the last non-empty or non-zero line for each entry
+    	lastValidLine = 0
+    	For j = 0 to len-1
+    		If values(j) = "" OR values(j) = "0" Then
+    			'NOT
+    		Else
+    			lastValidLine = j
+    		End If
+    	Next j
+    		
+    	Print #json, "    {"
+    	
+    	For i = 0 To len-1
+    		keyValString = "        " & CHR(34) & LCase(keys(i)) & CHR(34) & ": " & CHR(34) & values(i) & CHR(34) & ","
+    		keyValLastEntry = "        " & CHR(34) & LCase(keys(i)) & CHR(34) & ": " & CHR(34) & values(i) & CHR(34)
+    		    		
+	    	If i = len-1 Then
+	    		'Don't include comma after last entry
+	    		Print #json, keyValLastEntry
+	    	Else
+	    		If i = lastValidLine Then
+	    			Print #json, keyValLastEntry
+	    		Else
+	    			Print #json, keyValString
+	    		End If
+	    		
+	    	End If
+    	Next i
+    	
+    	'Next object
+    	If line = lines-1 Then
+    		Print #json, "    }"
+    	Else
+    		Print #json, "    },"
+    	End If 	
+	End If
+Next line
+ 
+ 
+' Close file 
+Print #json, "]"
+Close #json
+Close #csv          
+
+End Sub

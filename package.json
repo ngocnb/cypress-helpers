@@ -21,6 +21,7 @@
   },
   "homepage": "https://gitlab.com/ngocnb/cypress-helpers#readme",
   "dependencies": {
+    "papaparse": "^5.4.1",
     "prettier": "^2.8.7"
   }
 }
