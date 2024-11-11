@@ -150,3 +150,13 @@ module.exports.checkboxField = (selector, label, values) => {
             cy.markStepSuccess();
         });
 };
+
+module.exports.radioField = (selector, label, value) => {
+    if (value === undefined) return true;
+    cy.addStep(`Select option of radio ${label}`)
+        .get(selector)
+        .check(value)
+        .then(() => {
+            cy.markStepSuccess();
+        });
+};

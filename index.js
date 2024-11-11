@@ -7,4 +7,5 @@ module.exports = {
     eccube4Helpers: require("./helpers/eccube4_helpers"),
     dcatHelpers: require("./helpers/dcat_helpers"),
     fileHelpers: require("./helpers/file_helpers"),
+    cypressHelpers: require("./helpers/test_cases_helpers")
 };
