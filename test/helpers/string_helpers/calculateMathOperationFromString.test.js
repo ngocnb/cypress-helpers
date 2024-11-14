@@ -38,7 +38,7 @@ describe("calculateMathOperationFromString", () => {
         const variable = 50;
         const variablePlaceholder = "MAX_LENGTH";
         const result = calculateMathOperationFromString(inputString, variable, variablePlaceholder);
-        expect(result).toBe(null);
+        expect(result).toBe(inputString);
     });
 
     test("handles function string with multiple parameters", () => {
@@ -47,5 +47,21 @@ describe("calculateMathOperationFromString", () => {
         const variablePlaceholder = "MAX_LENGTH";
         const result = calculateMathOperationFromString(inputString, variable, variablePlaceholder);
         expect(result).toBe("stringHelpers.generateRandomJapaneseString(48, '', true)");
+    });
+
+    test("handles function string as second parameter with multiple parameters", () => {
+        const inputString = "faker.lorem.sentence(10).substring(0, ${MAX_LENGTH} - 2)";
+        const variable = 50;
+        const variablePlaceholder = "MAX_LENGTH";
+        const result = calculateMathOperationFromString(inputString, variable, variablePlaceholder);
+        expect(result).toBe("faker.lorem.sentence(10).substring(0, 48)");
+    });
+
+    test("handles variable as string", () => {
+        const inputString = "faker.lorem.sentence(10).substring(0, ${MAX_LENGTH} - 2)";
+        const variable = "50";
+        const variablePlaceholder = "MAX_LENGTH";
+        const result = calculateMathOperationFromString(inputString, variable, variablePlaceholder);
+        expect(result).toBe("faker.lorem.sentence(10).substring(0, 48)");
     });
 });

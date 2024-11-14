@@ -39,6 +39,7 @@ module.exports.calculateMathOperationFromString = (str, variable, variablePlaceh
     if (match) {
         const operator = match[1];
         const number = parseInt(match[2], 10);
+        variable = parseInt(variable, 10);
 
         // Calculate the result based on the operator
         let calculatedValue;
@@ -63,6 +64,14 @@ module.exports.calculateMathOperationFromString = (str, variable, variablePlaceh
         return outputString; // Return the output string for further use
     } else {
         console.log("No valid expression found in input string.");
-        return null; // Return the original string if no match is found
+        return str; // Return the original string if no match is found
     }
+};
+
+module.exports.replaceImproperCharacters = (str) => {
+    str = str.replace("‘", "'");
+    str = str.replace("’", "'");
+    str = str.replace("–", "-");
+
+    return str;
 };

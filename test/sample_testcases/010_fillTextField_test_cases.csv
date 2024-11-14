@@ -1,0 +1,27 @@
+no,field,field_label,case,selector,input_value,success,message,priority
+1,entry_name_name01,entry_name_name01,Success,#entry_name_name01,DEFAULT_VALUE,Y,,1
+2,entry_name_name01,entry_name_name01,String – Length = max,#entry_name_name01,EGJ0CYBwFiKTJNxC,Y,,1
+3,entry_name_name01,entry_name_name01,String – Length = max + 2,#entry_name_name01,P7hnH37ktPiatLkpHc,N,値が長すぎます。16文字以内でなければなりません。,1
+4,entry_name_name01,entry_name_name01,String – min < Length < max,#entry_name_name01,qw2NYdgzMZTF1f,Y,,1
+5,entry_name_name01,entry_name_name01,String – Length = min,#entry_name_name01,,Y,,1
+6,entry_name_name01,entry_name_name01,String – Length < min,#entry_name_name01,,N,,1
+7,entry_name_name01,entry_name_name01,String – Length = max (Japanese characters),#entry_name_name01,ろふさほれふみもひてこねわゆたけ,Y,,1
+8,entry_name_name01,entry_name_name01,String – Length = max + 2 (Japanese characters),#entry_name_name01,るれひひむけねかあんきなあへとくけめ,N,,1
+9,entry_name_name01,entry_name_name01,String – min < Length < max (Japanese characters),#entry_name_name01,もなてあうせんけもともいれは,Y,,1
+10,entry_name_name01,entry_name_name01,String – Length = min (Japanese characters),#entry_name_name01,,Y,,1
+11,entry_name_name01,entry_name_name01,String – Length < min (Japanese characters),#entry_name_name01,,N,,1
+12,entry_name_name01,entry_name_name01,String – include space – min < Length < max,#entry_name_name01,Copia ver nihi,N,スペース、タブ、改行は含めないで下さい。 ,1
+13,entry_name_name01,entry_name_name01,String – include space – min < Length < max (Japanese characters),#entry_name_name01,ま やみみすお か つにぬ ,N,スペース、タブ、改行は含めないで下さい。 ,1
+14,entry_name_name01,entry_name_name01,number - integer,#entry_name_name01,12345,Y,,1
+15,entry_name_name01,entry_name_name01,number - integer > MAX_SAFE_INTEGER (9007199254740991),#entry_name_name01,9.00719925474099E+015,Y,,1
+16,entry_name_name01,entry_name_name01,number - integer < 0,#entry_name_name01,-1221,Y,,1
+17,entry_name_name01,entry_name_name01,number - float,#entry_name_name01,1.3324,Y,,1
+18,entry_name_name01,entry_name_name01,number - float < 0,#entry_name_name01,-993.333,Y,,1
+19,entry_name_name01,entry_name_name01,html code,#entry_name_name01,<strong>Hello</strong>,Y,値が長すぎます。16文字以内でなければなりません。,1
+20,entry_name_name01,entry_name_name01,javascript code,#entry_name_name01,<script>alert('123')</script>,Y,値が長すぎます。16文字以内でなければなりません。,1
+21,entry_name_name01,entry_name_name01,php code,#entry_name_name01,<? die(123)  ?>,N,スペース、タブ、改行は含めないで下さい。 ,1
+22,entry_name_name01,entry_name_name01,space - start,#entry_name_name01,29a da34,N,スペース、タブ、改行は含めないで下さい。 ,1
+23,entry_name_name01,entry_name_name01,space - end,#entry_name_name01,lorem ipsum dolosit 123 ,N,スペース、タブ、改行は含めないで下さい。 ,1
+24,entry_name_name01,entry_name_name01,special character,#entry_name_name01,!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~,Y,,1
+25,entry_name_name01,entry_name_name01,just contains space,#entry_name_name01,,N,入力されていません。,1
+26,entry_name_name01,entry_name_name01,empty,#entry_name_name01,,,,

@@ -1,4 +1,7 @@
-import * as stringHelpers from "./string_helpers";
+const stringHelpers = require("./string_helpers");
+const fileHelpers = require("./file_helpers");
+const path = require("path");
+const { faker } = require("@faker-js/faker");
 
 module.exports.generateFieldList = (cy, formSelector, filepath) => {
     const formData = [];
@@ -89,7 +92,7 @@ module.exports.generateFieldList = (cy, formSelector, filepath) => {
             const csvData = formData
                 .map(
                     (row) =>
-                        `${row.field},${row.selector},${row.label},${row.fill_data_class},${row.fill_data_function},${row.max_length},${row.min_length},${row.is_required}`
+                        `${row.field},${row.selector},${row.label},${row.fill_data_function},${row.fill_data_class},${row.max_length},${row.min_length},${row.is_required}`
                 )
                 .join("\n");
 
@@ -97,4 +100,72 @@ module.exports.generateFieldList = (cy, formSelector, filepath) => {
 
             cy.writeFile(filepath, csvContent);
         });
+};
+
+module.exports.generateTestCases = async (fieldListFilepath, filepath, suffix = "") => {
+    // read csv file from fieldListFilepath
+    const fieldList = await fileHelpers.readCSV(fieldListFilepath);
+    const rows = [];
+    let testCaseCount = 1;
+    const headers = ["no", "field", "field_label", "case", "selector", "input_value", "success", "message", "priority"];
+
+    // loop through the fieldList
+    for (let i = 0; i < fieldList.length; i++) {
+        const field = fieldList[i];
+        const fieldname = field.field;
+        const selector = field.selector;
+        const label = field.label;
+        const fillDataFunction = field.fill_data_function;
+        const fillDataClass = field.fill_data_class;
+        const maxLength = field.max_length;
+        const minLength = field.min_length;
+        const isRequired = field.is_required;
+
+        const currentDir = path.dirname(__filename);
+        const sampleTestCasesFilepath = currentDir + "/../sample_testcases/" + fillDataFunction + suffix + ".csv";
+        // read the sample test cases
+        const sampleTestCases = await fileHelpers.readCSV(sampleTestCasesFilepath, "utf8");
+
+        // loop through the sample test cases
+        for (let j = 0; j < sampleTestCases.length; j++) {
+            const sampleTestCase = sampleTestCases[j];
+
+            let inputValue = sampleTestCase.input_value;
+            // calculate input value
+            // example: faker.string.alphanumeric(${MAX_LENGTH} + 2) --> faker.string.alphanumeric(48)
+            // after that, run the function to get the value
+            if (sampleTestCase.dynamic_input === "Y") {
+                // replace improper characters
+                inputValue = stringHelpers.replaceImproperCharacters(inputValue);
+
+                inputValue = stringHelpers.calculateMathOperationFromString(inputValue, maxLength, "MAX_LENGTH");
+                inputValue = stringHelpers.calculateMathOperationFromString(inputValue, minLength, "MIN_LENGTH");
+                inputValue = inputValue.replace("${MAX_LENGTH}", maxLength);
+                inputValue = inputValue.replace("${MIN_LENGTH}", minLength);
+
+                // run the function to get the value
+                inputValue = eval(inputValue);
+            }
+            let message = sampleTestCase.message;
+            // replace placeholder with value
+            message = message.replace("${MAX_LENGTH}", maxLength);
+            message = message.replace("${MIN_LENGTH}", minLength);
+
+            rows.push({
+                no: testCaseCount,
+                field: fieldname,
+                field_label: label,
+                case: sampleTestCase.case,
+                selector: selector,
+                input_value: inputValue,
+                success: sampleTestCase.success,
+                message: message,
+                priority: sampleTestCase.priority,
+            });
+            testCaseCount++;
+        }
+
+        // write the rows to the file
+        await fileHelpers.writeCSV(filepath, rows, headers);
+    }
 };

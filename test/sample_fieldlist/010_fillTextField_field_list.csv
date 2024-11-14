@@ -1,0 +1,2 @@
+field,selector,label,fill_data_function,fill_data_class,max_length,min_length,is_required
+entry_name_name01,#entry_name_name01,entry_name_name01,fillTextField,formHelpers,16,0,true
