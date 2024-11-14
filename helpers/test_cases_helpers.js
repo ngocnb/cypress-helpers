@@ -1,3 +1,5 @@
+import * as stringHelpers from "./string_helpers";
+
 module.exports.generateFieldList = (cy, formSelector, filepath) => {
     const formData = [];
 

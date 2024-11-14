@@ -4,7 +4,7 @@
   "description": "Helpers for quickly developing test scripts with Cypress",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,11 @@
   },
   "homepage": "https://gitlab.com/ngocnb/cypress-helpers#readme",
   "dependencies": {
+    "@faker-js/faker": "^9.2.0",
     "papaparse": "^5.4.1",
     "prettier": "^2.8.7"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }
