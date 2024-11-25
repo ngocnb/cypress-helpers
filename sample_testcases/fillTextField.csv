@@ -3,8 +3,8 @@ no,field,field_label,case,selector,input_value,dynamic_input,success,message,pri
 2,,,String – Length = max,,faker.string.alphanumeric(${MAX_LENGTH}),Y,Y,,1
 3,,,String – Length = max + 2,,faker.string.alphanumeric(${MAX_LENGTH} + 2),Y,N,値が長すぎます。${MAX_LENGTH}文字以内でなければなりません。,1
 4,,,String – min < Length < max,,faker.string.alphanumeric(${MAX_LENGTH} - 2),Y,Y,,1
-5,,,String – Length = min,,faker.string.alphanumeric(${MIN_LENGTH}),Y,N,入力されていません。,1
-6,,,String – Length < min,,faker.string.alphanumeric(${MIN_LENGTH} - 2),Y,N,入力されていません。,1
+5,,,String – Length = min,,faker.string.alphanumeric(${MIN_LENGTH}),Y,N,必ず入力してください。,1
+6,,,String – Length < min,,faker.string.alphanumeric(${MIN_LENGTH} - 2),Y,N,必ず入力してください。,1
 7,,,String – Length = max (Japanese characters),,stringHelpers.generateRandomJapaneseString(${MAX_LENGTH}),Y,Y,,1
 8,,,String – Length = max + 2 (Japanese characters),,stringHelpers.generateRandomJapaneseString(${MAX_LENGTH} + 2),Y,N,,1
 9,,,String – min < Length < max (Japanese characters),,stringHelpers.generateRandomJapaneseString(${MAX_LENGTH} - 2),Y,Y,,1
@@ -13,7 +13,7 @@ no,field,field_label,case,selector,input_value,dynamic_input,success,message,pri
 12,,,String – include space – min < Length < max,,"faker.lorem.sentence(10).substring(0, ${MAX_LENGTH} – 2)",Y,N,スペース、タブ、改行は含めないで下さい。 ,1
 13,,,String – include space – min < Length < max (Japanese characters),,"stringHelpers.generateRandomJapaneseString(${MAX_LENGTH} - 2, ‘’, true)",Y,N,スペース、タブ、改行は含めないで下さい。 ,1
 14,,,number - integer,,12345,N,Y,,1
-15,,,number - integer > MAX_SAFE_INTEGER (9007199254740991),,9.00719925474099E+015,N,Y,,1
+15,,,number - integer > MAX_SAFE_INTEGER (9007199254740991),,9007199254740990,N,Y,,1
 16,,,number - integer < 0,,-1221,N,Y,,1
 17,,,number - float,,1.3324,N,Y,,1
 18,,,number - float < 0,,-993.333,N,Y,,1
@@ -23,5 +23,5 @@ no,field,field_label,case,selector,input_value,dynamic_input,success,message,pri
 22,,,space - start,,29a da34,N,N,スペース、タブ、改行は含めないで下さい。 ,1
 23,,,space - end,,lorem ipsum dolosit 123 ,N,N,スペース、タブ、改行は含めないで下さい。 ,1
 24,,,special character,,"!""#$%&'()*+,-./:;<=>?@[\]^_`{|}~",N,Y,,1
-25,,,just contains space,,,N,N,入力されていません。,1
+25,,,just contains space,,,N,N,必ず入力してください。,1
 26,,,empty,,,,,,
